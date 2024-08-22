@@ -1,0 +1,19 @@
+"2","Error in .rs.runSqlForDataCapture(""WITH \nPROJECT_DURATION AS (\n    SELECT DISTINCT id, DATEDIFF(end_date, start_date)/365.0 AS DURATION_YR\n    FROM linkedin_projects\n    ORDER BY DURATION_YR DESC\n),\nCOST AS (\n    SELECT A.project_id, SUM(B.SALARY * C.DURATION_YR) AS PROJECT_COST\n    FROM linkedin_emp_projects A\n    INNER JOIN linkedin_employees B ON A.EMP_ID = B.ID\n    INNER JOIN PROJECT_DURATION C ON A.project_id = C.ID\n    GROUP BY A.project_id\n)\nSELECT A.TITLE, A.BUDGET, CEILING(B.PROJECT_COST) AS PROJECT_COST\nFROM linkedin_projects A\nINNER JOIN COST B ON A.ID = B.project_id\nWHERE A.BUDGET < CEILING(B.PROJECT_COST)\nORDER BY TITLE ASC;"",  : 
+  The 'connection' option (DBI connection) is required for sql chunks.
+"
+"2","In addition: "
+"2","Warning messages:
+"
+"2","1: "
+"2","In readLines(index, encoding = encoding) :"
+"2","
+ "
+"2"," incomplete final line found on '/Users/deayan/Desktop/GITHUB/20_sql/index.Rmd'
+"
+"2","2: "
+"2","In readLines(index, encoding = encoding) :"
+"2","
+ "
+"2"," incomplete final line found on '/Users/deayan/Desktop/GITHUB/20_sql/index.Rmd'
+"
+"2","Failed to execute SQL chunk"

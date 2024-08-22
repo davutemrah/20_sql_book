@@ -1,0 +1,115 @@
+# joins
+
+## joining
+
+## Set Operations
+
+**Summary:**
+
+- `UNION`: Combines two result sets, removing duplicates.
+
+- `UNION ALL`: Combines two result sets, keeping all duplicates.
+
+- `INTERSECT`: Returns only the common rows between two result sets.
+
+- `MINUS/EXCEPT`: Returns rows from the first result set that are not present in the second.
+
+
+### `UNION` Operator
+
+Combines the result sets of two or more SELECT statements, `removing duplicate rows` from the result set.
+
+```sql
+SELECT 
+  'XYZ' AS AUDIENCE_NAME, COUNT(*) AS ID_COUNT
+FROM AUDIENCE_TABLE_1
+
+UNION
+
+SELECT
+  'ABC' AS AUDIENCE_NAME, COUNT(*) AS ID_COUNT
+FROM AUDIENCE_TABLE_2
+```
+
+**Key Points:**
+
+- `Duplicate Removal:` UNION automatically removes duplicate rows.
+
+- `Column Alignment:` The number and `data types` of the columns in each SELECT statement must be the same.
+
+- `Order:` The order of rows from the individual queries is not guaranteed unless you use an ORDER BY clause in the final result.
+
+
+### `UNION ALL` Operator
+
+Combines the result sets of two or more SELECT statements, including all duplicate rows.
+
+```sql
+SELECT first_name FROM employees
+
+UNION ALL
+
+SELECT first_name FROM clients;
+```
+
+**Key Points:**
+
+- `Includes Duplicates:` UNION ALL keeps all duplicate rows in the final result set.
+
+- `Performance:` UNION ALL is generally faster than UNION 
+
+- `Column Alignment:` The columns must match in number and data type.
+
+
+### `INTERSECT` Operator
+
+Returns only the rows that are common to both SELECT queries (i.e., the intersection of the result sets).
+
+```sql
+SELECT first_name FROM employees
+
+INTERSECT
+
+SELECT first_name FROM clients;
+```
+
+**Key Points:**
+
+- `Common Rows Only:` INTERSECT returns only rows that appear in both result sets.
+
+- `Duplicate Removal:` Duplicates are removed within each individual result set before the intersection is determined.
+
+- `Column Alignment:` The columns must match in number and data type.
+
+
+
+
+### `MINUS` (or `EXCEPT`) Operator
+
+
+Returns the rows from the first SELECT query that are not present in the second SELECT query.
+
+
+```sql
+SELECT column_name(s) FROM table1
+
+MINUS
+
+SELECT column_name(s) FROM table2;
+```
+
+**Key Points:**
+
+- `Unique Rows Only:` MINUS returns only the rows that are unique to the first result set.
+
+- `Duplicate Removal:` Duplicates are removed from the first result set before subtraction.
+
+- `Column Alignment:` The columns must match in number and data type.
+
+
+
+
+
+
+
+

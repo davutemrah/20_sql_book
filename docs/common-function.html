@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 1 COMMON FUNCTION | SQL BOOK</title>
+  <meta name="description" content="These are my SQL notes to my-self" />
+  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 1 COMMON FUNCTION | SQL BOOK" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="These are my SQL notes to my-self" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 1 COMMON FUNCTION | SQL BOOK" />
+  
+  <meta name="twitter:description" content="These are my SQL notes to my-self" />
+  
+
+<meta name="author" content="Davut Ayan" />
+
+
+<meta name="date" content="2024-08-21" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="interview-prep.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Statistics and Causal Inference</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Acknowledgement</a></li>
+<li class="chapter" data-level="1" data-path="common-function.html"><a href="common-function.html"><i class="fa fa-check"></i><b>1</b> COMMON FUNCTION</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="common-function.html"><a href="common-function.html#string-functions"><i class="fa fa-check"></i><b>1.1</b> string functions</a></li>
+<li class="chapter" data-level="1.2" data-path="common-function.html"><a href="common-function.html#functions-working-on-columns-aggregates"><i class="fa fa-check"></i><b>1.2</b> Functions Working on Columns (Aggregates):</a></li>
+<li class="chapter" data-level="1.3" data-path="common-function.html"><a href="common-function.html#functions-working-on-columns-non-aggregate"><i class="fa fa-check"></i><b>1.3</b> Functions Working on Columns (Non-Aggregate):</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="common-function.html"><a href="common-function.html#window-functions-row-level-context"><i class="fa fa-check"></i><b>1.3.1</b> Window Functions (Row-Level Context)</a></li>
+<li class="chapter" data-level="1.3.2" data-path="common-function.html"><a href="common-function.html#functions-working-on-lists-of-values-within-a-single-row"><i class="fa fa-check"></i><b>1.3.2</b> Functions Working on Lists of Values (within a Single Row):</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="common-function.html"><a href="common-function.html#date-functions"><i class="fa fa-check"></i><b>1.4</b> date functions</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="interview-prep.html"><a href="interview-prep.html"><i class="fa fa-check"></i><b>2</b> Interview Prep</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="interview-prep.html"><a href="interview-prep.html#risky-projects"><i class="fa fa-check"></i><b>2.1</b> Risky Projects</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="interview-prep.html"><a href="interview-prep.html#tables"><i class="fa fa-check"></i><b>2.1.1</b> tables</a></li>
+<li class="chapter" data-level="2.1.2" data-path="interview-prep.html"><a href="interview-prep.html#solution-1"><i class="fa fa-check"></i><b>2.1.2</b> SOLUTION 1</a></li>
+<li class="chapter" data-level="2.1.3" data-path="interview-prep.html"><a href="interview-prep.html#soultion-2"><i class="fa fa-check"></i><b>2.1.3</b> SOULTION 2</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://davutemrah.github.io" target="blank">Back to Home Page</li>
+<li><a href="https://davutemrah.github.io/notebooks/" target="blank">Back to Collections</li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">SQL BOOK</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="common-function" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">Chapter 1</span> COMMON FUNCTION<a href="common-function.html#common-function" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="string-functions" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> string functions<a href="common-function.html#string-functions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li><p><code>LENGTH()</code>: Returns the length of the string in the column.</p></li>
+<li><p><code>LOWER()</code> and <code>UPPER()</code>: Converts all characters in the string column to lowercase (LOWER) or uppercase (UPPER).</p></li>
+<li><p><code>TRIM()</code>: Removes leading and trailing spaces from the string in the column.</p></li>
+<li><p><code>SUBSTR(string, start_position, [length])</code>: Extracts a substring from a string, starting at a specified position, and optionally for a specified number of characters.</p></li>
+<li><p><code>LEFT(column, 5)</code>: Extracts a specified number of characters from the left (beginning) of a string.</p></li>
+<li><p><code>CONCAT(col1, col2)</code>: Concatenates two or more strings together.</p></li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb1-1"><a href="common-function.html#cb1-1" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb1-2"><a href="common-function.html#cb1-2" tabindex="-1"></a>  <span class="fu">LENGTH</span>(first_name) <span class="kw">AS</span> lenght_of_first_name,</span>
+<span id="cb1-3"><a href="common-function.html#cb1-3" tabindex="-1"></a>  <span class="fu">LOWER</span>(first_name) <span class="kw">AS</span> lower_case,</span>
+<span id="cb1-4"><a href="common-function.html#cb1-4" tabindex="-1"></a>  <span class="fu">UPPER</span>(first_name) <span class="kw">AS</span> upper_case,</span>
+<span id="cb1-5"><a href="common-function.html#cb1-5" tabindex="-1"></a>  <span class="fu">TRIM</span>(first_name) <span class="kw">AS</span> NAME,</span>
+<span id="cb1-6"><a href="common-function.html#cb1-6" tabindex="-1"></a>  <span class="fu">SUBSTR</span>(first_name, <span class="dv">1</span>, <span class="dv">5</span>) <span class="kw">AS</span> NAME_5_CHAR,</span>
+<span id="cb1-7"><a href="common-function.html#cb1-7" tabindex="-1"></a>  <span class="fu">SUBSTR</span>(last_name, <span class="dv">3</span>) <span class="kw">AS</span> remaining_name,</span>
+<span id="cb1-8"><a href="common-function.html#cb1-8" tabindex="-1"></a>  <span class="kw">LEFT</span>(first_name, <span class="dv">3</span>) <span class="kw">AS</span> short_name,</span>
+<span id="cb1-9"><a href="common-function.html#cb1-9" tabindex="-1"></a>  <span class="fu">CONCAT</span>(first_name, <span class="st">&#39;_&#39;</span>,  last_name) <span class="kw">AS</span> FULL_NAME</span>
+<span id="cb1-10"><a href="common-function.html#cb1-10" tabindex="-1"></a><span class="kw">FROM</span> employees;</span></code></pre></div>
+</div>
+<div id="functions-working-on-columns-aggregates" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> Functions Working on Columns (Aggregates):<a href="common-function.html#functions-working-on-columns-aggregates" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>These functions can also serve as window functions.</p>
+<ol style="list-style-type: decimal">
+<li><code>AVG()</code> : Computes the average value of a set of rows within the window or partition or across all rows</li>
+</ol>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb2-1"><a href="common-function.html#cb2-1" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="cb2-2"><a href="common-function.html#cb2-2" tabindex="-1"></a>      <span class="fu">AVG</span>(SALARY) <span class="kw">AS</span> AVERAGE_SALARY,</span>
+<span id="cb2-3"><a href="common-function.html#cb2-3" tabindex="-1"></a>      <span class="fu">AVG</span>(SALARY) <span class="kw">OVER</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> DEPT) <span class="kw">AS</span> AVG_DEPT_SALARY</span>
+<span id="cb2-4"><a href="common-function.html#cb2-4" tabindex="-1"></a><span class="kw">FROM</span> employees;</span></code></pre></div>
+<p><br />
+</p>
+<ol start="2" style="list-style-type: decimal">
+<li><code>COUNT()</code> : Counts the number of rows in the window (partition) or across the entire result set.</li>
+</ol>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb3-1"><a href="common-function.html#cb3-1" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="cb3-2"><a href="common-function.html#cb3-2" tabindex="-1"></a>      <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> <span class="kw">ID</span>) <span class="kw">AS</span> DIISTINCT_ID_COUNT,</span>
+<span id="cb3-3"><a href="common-function.html#cb3-3" tabindex="-1"></a>      <span class="fu">COUNT</span>(EMP_ID) <span class="kw">OVER</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> DEPARTMENT) <span class="kw">AS</span> DEPT_EMP_COUNT</span>
+<span id="cb3-4"><a href="common-function.html#cb3-4" tabindex="-1"></a><span class="kw">FROM</span> employees;</span></code></pre></div>
+<p><br />
+</p>
+<ol start="3" style="list-style-type: decimal">
+<li><code>SUM()</code> : Computes the sum of values within the window (partition) or across the entire result set.</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb4-1"><a href="common-function.html#cb4-1" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="cb4-2"><a href="common-function.html#cb4-2" tabindex="-1"></a>    <span class="fu">SUM</span>(SALARY) <span class="kw">AS</span> SALARY_TOTAL,</span>
+<span id="cb4-3"><a href="common-function.html#cb4-3" tabindex="-1"></a>    <span class="fu">SUM</span>(SALARY) <span class="kw">OVER</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> DEPT) <span class="kw">AS</span> DEPT_SALARY_TOTAL</span>
+<span id="cb4-4"><a href="common-function.html#cb4-4" tabindex="-1"></a><span class="kw">FROM</span> employees;</span></code></pre></div>
+<p><br />
+</p>
+<ol start="4" style="list-style-type: decimal">
+<li><code>MIN()</code> and <code>MAX()</code>: Returns the minimum or maximum value within the window or partition.</li>
+</ol>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb5-1"><a href="common-function.html#cb5-1" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="cb5-2"><a href="common-function.html#cb5-2" tabindex="-1"></a>      <span class="fu">MIN</span>(SALARY) <span class="kw">AS</span> MIN_SALARY,</span>
+<span id="cb5-3"><a href="common-function.html#cb5-3" tabindex="-1"></a>      <span class="fu">MAX</span>(SALARY) <span class="kw">AS</span> MAX_SALARY,</span>
+<span id="cb5-4"><a href="common-function.html#cb5-4" tabindex="-1"></a>      <span class="fu">MIN</span>(SALARY) <span class="kw">OVER</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> DEPT) <span class="kw">AS</span> MIN_DEPT_SALARY,</span>
+<span id="cb5-5"><a href="common-function.html#cb5-5" tabindex="-1"></a>      <span class="fu">MAX</span>(SALARY) <span class="kw">OVER</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> DEPT) <span class="kw">AS</span> MAX_DEPT_SALARY</span>
+<span id="cb5-6"><a href="common-function.html#cb5-6" tabindex="-1"></a><span class="kw">FROM</span> employees;</span></code></pre></div>
+</div>
+<div id="functions-working-on-columns-non-aggregate" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> Functions Working on Columns (Non-Aggregate):<a href="common-function.html#functions-working-on-columns-non-aggregate" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li><p><code>ABS()</code> : Returns the absolute value of each number in the column.</p></li>
+<li><p><code>CEIL()</code> or <code>CEILING()</code> : Returns the smallest integer value greater than or equal to each number in the column.</p></li>
+<li><p><code>FLOOR()</code> : Returns the largest integer value less than or equal to each number in the column.</p></li>
+<li><p><code>ROUND(col, 2)</code>: Rounds the values in cola to 2 decimal places.</p></li>
+<li><p><code>POWER(col, n)</code>: Returns the value of the column raised to the power n.</p></li>
+<li><p><code>SQRT()</code>: Returns the square root of each number in the column.</p></li>
+<li><p><code>EXP()</code>: Returns e raised to the power of each number in the column.</p></li>
+<li><p><code>LOG()</code>: Returns the natural logarithm of each number in the column.</p></li>
+<li><p><code>TRUNCATE(col, n)</code>: Truncates (cuts off) the values in the column to n decimal places, without <code>rounding.</code></p></li>
+</ol>
+<div id="window-functions-row-level-context" class="section level3 hasAnchor" number="1.3.1">
+<h3><span class="header-section-number">1.3.1</span> Window Functions (Row-Level Context)<a href="common-function.html#window-functions-row-level-context" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li><code>ROW_NUMBER()</code>: Assigns a unique sequential integer to rows within a partition of a result set, starting at 1 for the first row in each partition.</li>
+</ol>
+<p>This assigns a unique rank based on the salary, with the highest salary getting rank 1.</p>
+<pre><code>SELECT 
+      ROW_NUMBER() OVER (PARTITION BY XYZ ORDER BY salary DESC) AS rank
+FROM employees;</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li><code>RANK()</code>: Assigns a rank to each row within a partition of a result set, with the same rank assigned to rows with equal values. The next distinct value(s) are given a rank that skips numbers if there are ties.</li>
+</ol>
+<p>If two employees have the same salary, they will receive the same rank, and the next rank will skip accordingly (e.g., 1, 2, 2, 4).</p>
+<pre><code>SELECT 
+      RANK() OVER (PARTITION BY XYZ ORDER BY salary DESC) AS rank
+FROM employees;</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li><code>DENSE_RANK()</code>: Similar to <code>RANK()</code>, but it does not skip ranks after ties.</li>
+</ol>
+<p>If two employees have the same salary, they will receive the same rank, but the next rank will continue sequentially (e.g., 1, 2, 2, 3).</p>
+<pre><code>SELECT 
+      DENSE_RANK() OVER (PARTITION BY XYZ ORDER BY salary DESC) AS rank
+FROM employees;</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li><code>NTILE(n)</code>: Divides the rows in an ordered partition into n buckets or groups, and assigns a bucket number to each row. This is useful for distributing rows into quantiles.</li>
+</ol>
+<p>This divides the employees into four quartiles based on their salary.</p>
+<pre><code>SELECT 
+      employee_id, salary,
+      NTILE(4) OVER (ORDER BY salary DESC) AS quartile
+FROM employees;</code></pre>
+<p> </p>
+<ol start="5" style="list-style-type: decimal">
+<li><code>LAG()</code> and <code>LEAD()</code>: Accesses data from previous (LAG) or subsequent (LEAD) rows in the result set, without using a self-join.</li>
+</ol>
+<div class="sourceCode" id="cb10"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb10-1"><a href="common-function.html#cb10-1" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="cb10-2"><a href="common-function.html#cb10-2" tabindex="-1"></a>       <span class="fu">LAG</span>(salary, <span class="dv">1</span>) <span class="kw">OVER</span> (<span class="kw">ORDER</span> <span class="kw">BY</span> salary <span class="kw">DESC</span>) <span class="kw">AS</span> previous_salary,</span>
+<span id="cb10-3"><a href="common-function.html#cb10-3" tabindex="-1"></a>       <span class="fu">LEAD</span>(salary, <span class="dv">1</span>) <span class="kw">OVER</span> (<span class="kw">ORDER</span> <span class="kw">BY</span> salary <span class="kw">DESC</span>) <span class="kw">AS</span> next_salary</span>
+<span id="cb10-4"><a href="common-function.html#cb10-4" tabindex="-1"></a><span class="kw">FROM</span> employees;</span></code></pre></div>
+<p><br />
+</p>
+<ol start="6" style="list-style-type: decimal">
+<li><code>FIRST_VALUE()</code> and <code>LAST_VALUE()</code>: Returns the first or last value in a window or partition.</li>
+</ol>
+<div class="sourceCode" id="cb11"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb11-1"><a href="common-function.html#cb11-1" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="cb11-2"><a href="common-function.html#cb11-2" tabindex="-1"></a>      <span class="fu">FIRST_VALUE</span>(salary) <span class="kw">OVER</span> (<span class="kw">ORDER</span> <span class="kw">BY</span> salary <span class="kw">DESC</span>) <span class="kw">AS</span> HIGHEST_SALARY</span>
+<span id="cb11-3"><a href="common-function.html#cb11-3" tabindex="-1"></a>      <span class="fu">LAST_VALUE</span>(salary) <span class="kw">OVER</span> (<span class="kw">ORDER</span> <span class="kw">BY</span> salary <span class="kw">DESC</span>) <span class="kw">AS</span> LOWEST_SALARY</span>
+<span id="cb11-4"><a href="common-function.html#cb11-4" tabindex="-1"></a><span class="kw">FROM</span> employees;</span></code></pre></div>
+<p><br />
+</p>
+<ol start="7" style="list-style-type: decimal">
+<li><code>PERCENT_RANK()</code>: Calculates the relative rank of the current row within a partition, expressed as a percentage.</li>
+</ol>
+<div class="sourceCode" id="cb12"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb12-1"><a href="common-function.html#cb12-1" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="cb12-2"><a href="common-function.html#cb12-2" tabindex="-1"></a>       <span class="fu">PERCENT_RANK</span>() <span class="kw">OVER</span> (<span class="kw">ORDER</span> <span class="kw">BY</span> salary <span class="kw">DESC</span>) <span class="kw">AS</span> percentile_rank</span>
+<span id="cb12-3"><a href="common-function.html#cb12-3" tabindex="-1"></a><span class="kw">FROM</span> employees;</span></code></pre></div>
+<p><br />
+</p>
+</div>
+<div id="functions-working-on-lists-of-values-within-a-single-row" class="section level3 hasAnchor" number="1.3.2">
+<h3><span class="header-section-number">1.3.2</span> Functions Working on Lists of Values (within a Single Row):<a href="common-function.html#functions-working-on-lists-of-values-within-a-single-row" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>These functions all operate on a per-row basis, evaluating or combining values from multiple columns within the same row.</p>
+<ol style="list-style-type: decimal">
+<li><p><code>GREATEST(cola, colb, 0)</code>: Returns the greatest (largest) value from the list of columns for each row.</p></li>
+<li><p><code>LEAST(cola, colb, 0)</code>: Returns the smallest value among the list of arguments within a single row.</p></li>
+<li><p><code>COALESCE(cola, colb, 0)</code> : Returns the first non-null value in the column, or the default_value if all are null.</p></li>
+</ol>
+<div class="sourceCode" id="cb13"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb13-1"><a href="common-function.html#cb13-1" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb13-2"><a href="common-function.html#cb13-2" tabindex="-1"></a>    <span class="fu">GREATEST</span>(SALARY_2000, SALARY_2010) <span class="kw">AS</span> GREATEST_SALARY,</span>
+<span id="cb13-3"><a href="common-function.html#cb13-3" tabindex="-1"></a>    <span class="fu">LEAST</span>(SALARY_2000, SALARY_2010) <span class="kw">AS</span> LEAST_SALARY,</span>
+<span id="cb13-4"><a href="common-function.html#cb13-4" tabindex="-1"></a>    <span class="fu">COALESCE</span>(SALARY_2000, SALARY_2010) <span class="kw">as</span> SALARY</span>
+<span id="cb13-5"><a href="common-function.html#cb13-5" tabindex="-1"></a><span class="kw">FROM</span> employees;</span></code></pre></div>
+</div>
+</div>
+<div id="date-functions" class="section level2 hasAnchor" number="1.4">
+<h2><span class="header-section-number">1.4</span> date functions<a href="common-function.html#date-functions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><code>ADDDATE("2017-06-15", INTERVAL 10 DAY):</code> add date adding 10 days to given date</p>
+<p><code>CURRENT_DATE() :</code> return current date</p>
+<p><code>DATE("2017-06-15") :</code> extract date part</p>
+<p><code>DATEDIFF(END_DATE, START_DATE) :</code> returns difference in days</p>
+<p><code>DATE_ADD("2017-06-15", INTERVAL 10 DAY) :</code> add date adding 10 days to given date</p>
+<p><code>DAY("2017-06-15") :</code> Return the day of the month for a date:</p>
+<p><code>DAYNAME("2017-06-15") :</code> Return the weekday name for a date:</p>
+<p><code>HOUR("2017-06-20 09:34:00") :</code> Return the hour part of a datetime:</p>
+<p><code>MONTH("2017-06-15") :</code> Return the month part of a date:</p>
+<p><code>SUBDATE("2017-06-15", INTERVAL 10 DAY) :</code> Subtract 10 days from a date and return the date</p>
+<p><code>WEEK("2017-10-25") :</code> Return the week number for a date:</p>
+<p><code>YEAR("2017-06-15") :</code> Return the year part of a date:</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="interview-prep.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["Statistics.pdf", "Statistics.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

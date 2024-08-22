@@ -1,0 +1,10 @@
+h1:most-used-functions MOST USED FUNCTIONS
+h2:string-functions string functions
+h2:aggregate-functions Aggregate Functions:
+h2:non-aggregate-functions Non-Aggregate Functions:
+h2:window-functions Window Functions
+h2:functions-comparing-columns Functions comparing columns:
+h2:date-functions date functions
+h2:some-advanced-functions Some Advanced Functions
+h3:listagg LISTAGG
+

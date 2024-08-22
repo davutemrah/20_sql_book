@@ -1,0 +1,16 @@
+
+
+
+## LATERAL
+
+This SQL query involves a few advanced concepts, including the use of the LATERAL join and the FLATTEN function, which are specific to certain SQL platforms like Snowflake. Here’s a breakdown of the query:
+
+`ID_ARRAY`:  LIST OF IDS IN EACH ROW
+
+
+`FLATTEN` function is used to "unpack" or "expand" the ID_ARRAY column into individual elements. Essentially, it takes an array and returns each element in the array as a separate row.
+
+```sql
+SELECT F.MY_ID::VARCHAR AS MY_ID
+FROM TABLE_1 A,  LATERAL FLATTEN(A.ID_ARRAY) AS F
+```

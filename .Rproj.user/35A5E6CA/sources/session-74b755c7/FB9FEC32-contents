@@ -1,0 +1,115 @@
+# Probability
+
+## Distibutions
+
+
+## Bernoulli Distribution
+
+
+- **Definition:** The Bernoulli distribution is the simplest probability distribution that models a random experiment with exactly two possible outcomes: success (1) and failure (0). It is a discrete distribution.
+- **Probability Mass Function (PMF):** 
+  \[
+  P(X = 1) = p, \quad P(X = 0) = 1 - p
+  \]
+  where \( p \) is the probability of success, and \( 1 - p \) is the probability of failure.
+- **Expected Value (Mean):** 
+  \[
+  E(X) = p
+  \]
+- **Variance:**
+  \[
+  Var(X) = p(1 - p)
+  \]
+- **Example:** Flipping a fair coin (where \( p = 0.5 \) for heads and \( 1 - p = 0.5 \) for tails) is an example of a Bernoulli trial.
+
+### **Binomial Distribution**
+- **Definition:** The Binomial distribution extends the Bernoulli distribution to \( n \) independent and identical trials. Each trial has two possible outcomes, and the distribution models the number of successes in \( n \) trials.
+- **Probability Mass Function (PMF):** 
+  \[
+  P(X = k) = \binom{n}{k} p^k (1 - p)^{n - k}
+  \]
+  where \( k \) is the number of successes, \( n \) is the number of trials, and \( p \) is the probability of success in each trial.
+- **Expected Value (Mean):**
+  \[
+  E(X) = np
+  \]
+- **Variance:**
+  \[
+  Var(X) = np(1 - p)
+  \]
+- **Example:** If you flip a coin 10 times, the number of heads you get follows a Binomial distribution with parameters \( n = 10 \) and \( p = 0.5 \).
+
+### **Key Points to Remember:**
+- A Bernoulli distribution is essentially a Binomial distribution with \( n = 1 \).
+- The Binomial distribution models multiple Bernoulli trials.
+
+Would you like to go deeper into these distributions, or would you like to cover another topic?
+
+
+### **Problem Statement:**
+You toss \( n \) coins into a cup, and each coin has a probability \( p \) of landing in the cup. What is the expected number of coins that land in the cup?
+
+### **Modeling the Problem:**
+- Let \( X_i \) be a random variable representing the outcome of the \( i \)-th coin toss:
+  \[
+  X_i = 
+  \begin{cases} 
+  1 & \text{if the coin lands in the cup (success)} \\ 
+  0 & \text{if the coin does not land in the cup (failure)} 
+  \end{cases}
+  \]
+- \( X_i \) follows a **Bernoulli distribution** with probability \( p \) of success:
+  \[
+  P(X_i = 1) = p, \quad P(X_i = 0) = 1 - p
+  \]
+
+### **Total Number of Coins in the Cup:**
+- Let \( X \) be the total number of coins that land in the cup. Since each coin toss is independent, \( X \) is the sum of \( n \) independent Bernoulli random variables:
+  \[
+  X = X_1 + X_2 + \dots + X_n
+  \]
+- \( X \) follows a **Binomial distribution** with parameters \( n \) (number of tosses) and \( p \) (probability of a coin landing in the cup).
+
+### **Expected Number of Coins in the Cup:**
+- The expected value of a Binomial distribution \( X \) is given by:
+  \[
+  E(X) = np
+  \]
+  This means, on average, you can expect \( np \) coins to land in the cup.
+
+### **Example:**
+- Suppose you toss 10 coins, and each coin has a probability \( p = 0.7 \) of landing in the cup.
+- The expected number of coins in the cup is:
+  \[
+  E(X) = 10 \times 0.7 = 7
+  \]
+  So, you can expect approximately 7 coins to land in the cup on average.
+
+This scenario nicely illustrates how the Binomial distribution models the number of successes (coins landing in the cup) in a series of independent trials (coin tosses). Would you like to go through another example or explore a different distribution?
+
+
+## Standart Normal
+
+If \( X \) follows a standard normal distribution, denoted as \( X \sim \mathcal{N}(0, 1) \), then \( X \) has a mean of 0 and a variance of 1. Now, if we consider the random variable \( Y = X + 5 \), we can determine its distribution.
+
+### **Transformation of the Normal Distribution:**
+- If \( X \) follows a normal distribution \( \mathcal{N}(\mu, \sigma^2) \), then a linear transformation of \( X \) of the form \( Y = aX + b \) will follow a normal distribution:
+  \[
+  Y \sim \mathcal{N}(a\mu + b, a^2\sigma^2)
+  \]
+- In this case, since \( X \sim \mathcal{N}(0, 1) \), the transformation \( Y = X + 5 \) (where \( a = 1 \) and \( b = 5 \)) will follow:
+  \[
+  Y \sim \mathcal{N}(0 \times 1 + 5, 1^2 \times 1)
+  \]
+  \[
+  Y \sim \mathcal{N}(5, 1)
+  \]
+
+### **Conclusion:**
+- The random variable \( Y = X + 5 \) follows a normal distribution with a mean of 5 and a variance of 1:
+  \[
+  Y \sim \mathcal{N}(5, 1)
+  \]
+- This means \( Y \) has the same shape as a standard normal distribution but is centered at 5 instead of 0.
+
+Would you like to explore more about normal distributions or work on another type of problem?
