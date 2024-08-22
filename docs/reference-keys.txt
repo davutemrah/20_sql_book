@@ -23,9 +23,9 @@ functions-comparing-columns
 date-functions
 some-advanced-functions
 listagg
+lateral
 adhoc-solutions
 risky-projects
 tables
 solution-1
 soultion-2
-lateral

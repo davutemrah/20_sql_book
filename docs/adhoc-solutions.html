@@ -178,6 +178,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.7" data-path="most-used-functions.html"><a href="most-used-functions.html#some-advanced-functions"><i class="fa fa-check"></i><b>5.7</b> Some Advanced Functions</a>
 <ul>
 <li class="chapter" data-level="5.7.1" data-path="most-used-functions.html"><a href="most-used-functions.html#listagg"><i class="fa fa-check"></i><b>5.7.1</b> LISTAGG</a></li>
+<li class="chapter" data-level="5.7.2" data-path="most-used-functions.html"><a href="most-used-functions.html#lateral"><i class="fa fa-check"></i><b>5.7.2</b> LATERAL</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="adhoc-solutions.html"><a href="adhoc-solutions.html"><i class="fa fa-check"></i><b>6</b> Adhoc solutions</a>
@@ -188,7 +189,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.1.2" data-path="adhoc-solutions.html"><a href="adhoc-solutions.html#solution-1"><i class="fa fa-check"></i><b>6.1.2</b> SOLUTION 1</a></li>
 <li class="chapter" data-level="6.1.3" data-path="adhoc-solutions.html"><a href="adhoc-solutions.html#soultion-2"><i class="fa fa-check"></i><b>6.1.3</b> SOULTION 2</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="adhoc-solutions.html"><a href="adhoc-solutions.html#lateral"><i class="fa fa-check"></i><b>6.2</b> LATERAL</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://davutemrah.github.io" target="blank">Back to Home Page</li>
@@ -243,48 +243,40 @@ salary–int  </p>
 <div id="solution-1" class="section level3 hasAnchor" number="6.1.2">
 <h3><span class="header-section-number">6.1.2</span> SOLUTION 1<a href="adhoc-solutions.html#solution-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>DURATION YEAR 1 IS CALCULATED SEPARATELY WILL CAUSE PROBLEMS, BECAUSE IT IS NOT COSTLY TO KEEP IT ACCURATE TO DECIMAL POINTS</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb24-1"><a href="adhoc-solutions.html#cb24-1" tabindex="-1"></a><span class="kw">WITH</span> </span>
-<span id="cb24-2"><a href="adhoc-solutions.html#cb24-2" tabindex="-1"></a>PROJECT_DURATION <span class="kw">AS</span> (</span>
-<span id="cb24-3"><a href="adhoc-solutions.html#cb24-3" tabindex="-1"></a>    <span class="kw">SELECT</span> <span class="kw">DISTINCT</span> <span class="kw">id</span>, DATEDIFF(end_date, start_date)<span class="op">/</span><span class="fl">365.0</span> <span class="kw">AS</span> DURATION_YR</span>
-<span id="cb24-4"><a href="adhoc-solutions.html#cb24-4" tabindex="-1"></a>    <span class="kw">FROM</span> linkedin_projects</span>
-<span id="cb24-5"><a href="adhoc-solutions.html#cb24-5" tabindex="-1"></a>    <span class="kw">ORDER</span> <span class="kw">BY</span> DURATION_YR <span class="kw">DESC</span></span>
-<span id="cb24-6"><a href="adhoc-solutions.html#cb24-6" tabindex="-1"></a>),</span>
-<span id="cb24-7"><a href="adhoc-solutions.html#cb24-7" tabindex="-1"></a><span class="kw">COST</span> <span class="kw">AS</span> (</span>
-<span id="cb24-8"><a href="adhoc-solutions.html#cb24-8" tabindex="-1"></a>    <span class="kw">SELECT</span> A.project_id, <span class="fu">SUM</span>(B.SALARY <span class="op">*</span> C.DURATION_YR) <span class="kw">AS</span> PROJECT_COST</span>
-<span id="cb24-9"><a href="adhoc-solutions.html#cb24-9" tabindex="-1"></a>    <span class="kw">FROM</span> linkedin_emp_projects A</span>
-<span id="cb24-10"><a href="adhoc-solutions.html#cb24-10" tabindex="-1"></a>    <span class="kw">INNER</span> <span class="kw">JOIN</span> linkedin_employees B <span class="kw">ON</span> A.EMP_ID <span class="op">=</span> B.<span class="kw">ID</span></span>
-<span id="cb24-11"><a href="adhoc-solutions.html#cb24-11" tabindex="-1"></a>    <span class="kw">INNER</span> <span class="kw">JOIN</span> PROJECT_DURATION C <span class="kw">ON</span> A.project_id <span class="op">=</span> C.<span class="kw">ID</span></span>
-<span id="cb24-12"><a href="adhoc-solutions.html#cb24-12" tabindex="-1"></a>    <span class="kw">GROUP</span> <span class="kw">BY</span> A.project_id</span>
-<span id="cb24-13"><a href="adhoc-solutions.html#cb24-13" tabindex="-1"></a>)</span>
-<span id="cb24-14"><a href="adhoc-solutions.html#cb24-14" tabindex="-1"></a><span class="kw">SELECT</span> A.TITLE, A.BUDGET, CEILING(B.PROJECT_COST) <span class="kw">AS</span> PROJECT_COST</span>
-<span id="cb24-15"><a href="adhoc-solutions.html#cb24-15" tabindex="-1"></a><span class="kw">FROM</span> linkedin_projects A</span>
-<span id="cb24-16"><a href="adhoc-solutions.html#cb24-16" tabindex="-1"></a><span class="kw">INNER</span> <span class="kw">JOIN</span> <span class="kw">COST</span> B <span class="kw">ON</span> A.<span class="kw">ID</span> <span class="op">=</span> B.project_id</span>
-<span id="cb24-17"><a href="adhoc-solutions.html#cb24-17" tabindex="-1"></a><span class="kw">WHERE</span> A.BUDGET <span class="op">&lt;</span> CEILING(B.PROJECT_COST)</span>
-<span id="cb24-18"><a href="adhoc-solutions.html#cb24-18" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> TITLE <span class="kw">ASC</span>;</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb25-1"><a href="adhoc-solutions.html#cb25-1" tabindex="-1"></a><span class="kw">WITH</span> </span>
+<span id="cb25-2"><a href="adhoc-solutions.html#cb25-2" tabindex="-1"></a>PROJECT_DURATION <span class="kw">AS</span> (</span>
+<span id="cb25-3"><a href="adhoc-solutions.html#cb25-3" tabindex="-1"></a>    <span class="kw">SELECT</span> <span class="kw">DISTINCT</span> <span class="kw">id</span>, DATEDIFF(end_date, start_date)<span class="op">/</span><span class="fl">365.0</span> <span class="kw">AS</span> DURATION_YR</span>
+<span id="cb25-4"><a href="adhoc-solutions.html#cb25-4" tabindex="-1"></a>    <span class="kw">FROM</span> linkedin_projects</span>
+<span id="cb25-5"><a href="adhoc-solutions.html#cb25-5" tabindex="-1"></a>    <span class="kw">ORDER</span> <span class="kw">BY</span> DURATION_YR <span class="kw">DESC</span></span>
+<span id="cb25-6"><a href="adhoc-solutions.html#cb25-6" tabindex="-1"></a>),</span>
+<span id="cb25-7"><a href="adhoc-solutions.html#cb25-7" tabindex="-1"></a><span class="kw">COST</span> <span class="kw">AS</span> (</span>
+<span id="cb25-8"><a href="adhoc-solutions.html#cb25-8" tabindex="-1"></a>    <span class="kw">SELECT</span> A.project_id, <span class="fu">SUM</span>(B.SALARY <span class="op">*</span> C.DURATION_YR) <span class="kw">AS</span> PROJECT_COST</span>
+<span id="cb25-9"><a href="adhoc-solutions.html#cb25-9" tabindex="-1"></a>    <span class="kw">FROM</span> linkedin_emp_projects A</span>
+<span id="cb25-10"><a href="adhoc-solutions.html#cb25-10" tabindex="-1"></a>    <span class="kw">INNER</span> <span class="kw">JOIN</span> linkedin_employees B <span class="kw">ON</span> A.EMP_ID <span class="op">=</span> B.<span class="kw">ID</span></span>
+<span id="cb25-11"><a href="adhoc-solutions.html#cb25-11" tabindex="-1"></a>    <span class="kw">INNER</span> <span class="kw">JOIN</span> PROJECT_DURATION C <span class="kw">ON</span> A.project_id <span class="op">=</span> C.<span class="kw">ID</span></span>
+<span id="cb25-12"><a href="adhoc-solutions.html#cb25-12" tabindex="-1"></a>    <span class="kw">GROUP</span> <span class="kw">BY</span> A.project_id</span>
+<span id="cb25-13"><a href="adhoc-solutions.html#cb25-13" tabindex="-1"></a>)</span>
+<span id="cb25-14"><a href="adhoc-solutions.html#cb25-14" tabindex="-1"></a><span class="kw">SELECT</span> A.TITLE, A.BUDGET, CEILING(B.PROJECT_COST) <span class="kw">AS</span> PROJECT_COST</span>
+<span id="cb25-15"><a href="adhoc-solutions.html#cb25-15" tabindex="-1"></a><span class="kw">FROM</span> linkedin_projects A</span>
+<span id="cb25-16"><a href="adhoc-solutions.html#cb25-16" tabindex="-1"></a><span class="kw">INNER</span> <span class="kw">JOIN</span> <span class="kw">COST</span> B <span class="kw">ON</span> A.<span class="kw">ID</span> <span class="op">=</span> B.project_id</span>
+<span id="cb25-17"><a href="adhoc-solutions.html#cb25-17" tabindex="-1"></a><span class="kw">WHERE</span> A.BUDGET <span class="op">&lt;</span> CEILING(B.PROJECT_COST)</span>
+<span id="cb25-18"><a href="adhoc-solutions.html#cb25-18" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> TITLE <span class="kw">ASC</span>;</span></code></pre></div>
 </div>
 <div id="soultion-2" class="section level3 hasAnchor" number="6.1.3">
 <h3><span class="header-section-number">6.1.3</span> SOULTION 2<a href="adhoc-solutions.html#soultion-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>BETTER SOLUTION</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb25-1"><a href="adhoc-solutions.html#cb25-1" tabindex="-1"></a><span class="kw">SELECT</span> </span>
-<span id="cb25-2"><a href="adhoc-solutions.html#cb25-2" tabindex="-1"></a>    A.TITLE, </span>
-<span id="cb25-3"><a href="adhoc-solutions.html#cb25-3" tabindex="-1"></a>    A.BUDGET, </span>
-<span id="cb25-4"><a href="adhoc-solutions.html#cb25-4" tabindex="-1"></a>    CEILING(<span class="fu">SUM</span>(B.SALARY) <span class="op">*</span> DATEDIFF(A.end_date, A.start_date) <span class="op">/</span> <span class="fl">365.0</span>) <span class="kw">AS</span> PROJECT_COST</span>
-<span id="cb25-5"><a href="adhoc-solutions.html#cb25-5" tabindex="-1"></a><span class="kw">FROM</span> linkedin_projects A</span>
-<span id="cb25-6"><a href="adhoc-solutions.html#cb25-6" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> linkedin_emp_projects C    <span class="kw">ON</span> A.<span class="kw">ID</span> <span class="op">=</span> C.project_id</span>
-<span id="cb25-7"><a href="adhoc-solutions.html#cb25-7" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> linkedin_employees B       <span class="kw">ON</span> C.EMP_ID <span class="op">=</span> B.<span class="kw">ID</span></span>
-<span id="cb25-8"><a href="adhoc-solutions.html#cb25-8" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> A.<span class="kw">ID</span></span>
-<span id="cb25-9"><a href="adhoc-solutions.html#cb25-9" tabindex="-1"></a><span class="kw">HAVING</span>  A.BUDGET <span class="op">&lt;</span> PROJECT_COST;</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb26-1"><a href="adhoc-solutions.html#cb26-1" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="cb26-2"><a href="adhoc-solutions.html#cb26-2" tabindex="-1"></a>    A.TITLE, </span>
+<span id="cb26-3"><a href="adhoc-solutions.html#cb26-3" tabindex="-1"></a>    A.BUDGET, </span>
+<span id="cb26-4"><a href="adhoc-solutions.html#cb26-4" tabindex="-1"></a>    CEILING(<span class="fu">SUM</span>(B.SALARY) <span class="op">*</span> DATEDIFF(A.end_date, A.start_date) <span class="op">/</span> <span class="fl">365.0</span>) <span class="kw">AS</span> PROJECT_COST</span>
+<span id="cb26-5"><a href="adhoc-solutions.html#cb26-5" tabindex="-1"></a><span class="kw">FROM</span> linkedin_projects A</span>
+<span id="cb26-6"><a href="adhoc-solutions.html#cb26-6" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> linkedin_emp_projects C    <span class="kw">ON</span> A.<span class="kw">ID</span> <span class="op">=</span> C.project_id</span>
+<span id="cb26-7"><a href="adhoc-solutions.html#cb26-7" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> linkedin_employees B       <span class="kw">ON</span> C.EMP_ID <span class="op">=</span> B.<span class="kw">ID</span></span>
+<span id="cb26-8"><a href="adhoc-solutions.html#cb26-8" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> A.<span class="kw">ID</span></span>
+<span id="cb26-9"><a href="adhoc-solutions.html#cb26-9" tabindex="-1"></a><span class="kw">HAVING</span>  A.BUDGET <span class="op">&lt;</span> PROJECT_COST;</span></code></pre></div>
+
 
 </div>
-</div>
-<div id="lateral" class="section level2 hasAnchor" number="6.2">
-<h2><span class="header-section-number">6.2</span> LATERAL<a href="adhoc-solutions.html#lateral" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>This SQL query involves a few advanced concepts, including the use of the LATERAL join and the FLATTEN function, which are specific to certain SQL platforms like Snowflake. Here’s a breakdown of the query:</p>
-<p><code>ID_ARRAY</code>: LIST OF IDS IN EACH ROW</p>
-<p><code>FLATTEN</code> function is used to “unpack” or “expand” the ID_ARRAY column into individual elements. Essentially, it takes an array and returns each element in the array as a separate row.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb26-1"><a href="adhoc-solutions.html#cb26-1" tabindex="-1"></a><span class="kw">SELECT</span> F.MY_ID:<span class="ch">:VARCHAR</span> <span class="kw">AS</span> MY_ID</span>
-<span id="cb26-2"><a href="adhoc-solutions.html#cb26-2" tabindex="-1"></a><span class="kw">FROM</span> TABLE_1 A,  LATERAL FLATTEN(A.ID_ARRAY) <span class="kw">AS</span> F</span></code></pre></div>
-
 </div>
 </div>
             </section>
