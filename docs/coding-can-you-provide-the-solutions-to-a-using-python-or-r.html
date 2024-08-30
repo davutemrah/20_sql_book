@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 4 FILTERING | SQL BOOK</title>
+  <title>Chapter 7 [Coding] Can you provide the solutions to (A) using Python or R? | SQL BOOK</title>
   <meta name="description" content="These are my SQL notes to my-self" />
   <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 4 FILTERING | SQL BOOK" />
+  <meta property="og:title" content="Chapter 7 [Coding] Can you provide the solutions to (A) using Python or R? | SQL BOOK" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="These are my SQL notes to my-self" />
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 FILTERING | SQL BOOK" />
+  <meta name="twitter:title" content="Chapter 7 [Coding] Can you provide the solutions to (A) using Python or R? | SQL BOOK" />
   
   <meta name="twitter:description" content="These are my SQL notes to my-self" />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="creatind-tables.html"/>
-<link rel="next" href="most-used-functions.html"/>
+<link rel="prev" href="adhoc-solutions.html"/>
+<link rel="next" href="sample-solutions.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -238,90 +238,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="filtering" class="section level1 hasAnchor" number="4">
-<h1><span class="header-section-number">Chapter 4</span> FILTERING<a href="filtering.html#filtering" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<ol style="list-style-type: decimal">
-<li><p><code>LIKE</code>: Filters results based on a pattern match within a string column.</p></li>
-<li><p><code>LIKE ANY</code>: Filters results based on a pattern match against any of a list of patterns.</p></li>
-<li><p><code>IN</code>: Filters results where a column’s value matches any value in a list of values.</p></li>
-<li><p><code>NOT IN</code>: Filters results where a column’s value does not match any value in a list of values.</p></li>
-<li><p><code>BETWEEN</code>: Filters results where a column’s value falls within a specified range (inclusive).</p></li>
-<li><p><code>IS NULL</code> and <code>IS NOT NULL</code>: Filters results based on whether a column’s value is NULL or not NULL.</p></li>
-<li><p><code>=</code>and <code>!=</code> (or <code>&lt;&gt;</code>): Filters results for exact matches or non-matches.</p></li>
-<li><p><code>ILIKE</code> and <code>ILIKE ANY</code>: perform pattern matching without worrying about the case (upper or lower) of the letters in the string.</p></li>
-</ol>
-<div class="sourceCode" id="cb6"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb6-1"><a href="filtering.html#cb6-1" tabindex="-1"></a><span class="kw">SELECT</span> TOP <span class="dv">5</span> <span class="op">*</span></span>
-<span id="cb6-2"><a href="filtering.html#cb6-2" tabindex="-1"></a><span class="kw">FROM</span> employees</span>
-<span id="cb6-3"><a href="filtering.html#cb6-3" tabindex="-1"></a><span class="kw">WHERE</span> NAME <span class="kw">LIKE</span> <span class="st">&#39;A%B.&#39;</span></span>
-<span id="cb6-4"><a href="filtering.html#cb6-4" tabindex="-1"></a>  <span class="kw">AND</span> LAST_NAME <span class="kw">LIKE</span> <span class="kw">ANY</span> (<span class="st">&#39;ASD&#39;</span>, <span class="st">&#39;%A&#39;</span>, <span class="st">&#39;V_&#39;</span>)</span>
-<span id="cb6-5"><a href="filtering.html#cb6-5" tabindex="-1"></a>  <span class="kw">AND</span> CITY <span class="kw">IN</span> (<span class="st">&#39;CHICAGO&#39;</span>, <span class="st">&#39;LAWRENCE&#39;</span>)</span>
-<span id="cb6-6"><a href="filtering.html#cb6-6" tabindex="-1"></a>  <span class="kw">AND</span> CITY <span class="kw">IN</span> (<span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> CITY_TABLE)</span>
-<span id="cb6-7"><a href="filtering.html#cb6-7" tabindex="-1"></a>  <span class="kw">AND</span> STATE <span class="kw">NOT</span> <span class="kw">IN</span> (<span class="st">&#39;TEXAS&#39;</span>)</span>
-<span id="cb6-8"><a href="filtering.html#cb6-8" tabindex="-1"></a>  <span class="kw">AND</span> SALARY <span class="kw">BETWEEN</span> <span class="dv">100</span> <span class="kw">AND</span> <span class="dv">10000</span></span>
-<span id="cb6-9"><a href="filtering.html#cb6-9" tabindex="-1"></a>  <span class="kw">AND</span> DEPARTMENT <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span></span>
-<span id="cb6-10"><a href="filtering.html#cb6-10" tabindex="-1"></a>  <span class="kw">AND</span> SALARY <span class="op">&gt;</span> <span class="dv">1000</span></span>
-<span id="cb6-11"><a href="filtering.html#cb6-11" tabindex="-1"></a>  <span class="kw">AND</span> NAME <span class="op">&lt;&gt;</span> <span class="st">&#39;DAVID&#39;</span></span>
-<span id="cb6-12"><a href="filtering.html#cb6-12" tabindex="-1"></a>  <span class="kw">AND</span> NAME ILIKE `david<span class="st">&#39;</span></span>
-<span id="cb6-13"><a href="filtering.html#cb6-13" tabindex="-1"></a><span class="st">  AND LOWER(NAME) LIKE &#39;</span>david<span class="st">&#39;    -- for those ILIKE is not supported</span></span></code></pre></div>
-<div id="wildcards" class="section level2 hasAnchor" number="4.1">
-<h2><span class="header-section-number">4.1</span> Wildcards<a href="filtering.html#wildcards" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><code>%</code>: Matches any sequence of characters (including zero characters).
-<code>_</code>: Matches any single character.
-<code>[]</code> (SQL Server): Matches any single character within the specified set or range.
-<code>[^]</code> (SQL Server): Matches any single character not in the specified set or range.
-<code>-</code> (SQL Server): Defines a range of characters within square brackets.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb7-1"><a href="filtering.html#cb7-1" tabindex="-1"></a><span class="kw">SELECT</span> TOP <span class="dv">5</span> <span class="op">*</span></span>
-<span id="cb7-2"><a href="filtering.html#cb7-2" tabindex="-1"></a><span class="kw">FROM</span> employees</span>
-<span id="cb7-3"><a href="filtering.html#cb7-3" tabindex="-1"></a><span class="kw">WHERE</span> NAME <span class="kw">LIKE</span> <span class="st">&#39;A%B&#39;</span>               <span class="co">-- starts with A and ends with B</span></span>
-<span id="cb7-4"><a href="filtering.html#cb7-4" tabindex="-1"></a>  <span class="kw">AND</span> NAME <span class="kw">LIKE</span> <span class="st">&#39;ALE_&#39;</span>              <span class="co">-- 4 character and starts with ALE</span></span>
-<span id="cb7-5"><a href="filtering.html#cb7-5" tabindex="-1"></a>  <span class="kw">AND</span> NAME <span class="kw">LIKE</span> <span class="st">&#39;[JM]ason&#39;</span>          <span class="co">-- jason or mason</span></span>
-<span id="cb7-6"><a href="filtering.html#cb7-6" tabindex="-1"></a>  <span class="kw">AND</span> NAME <span class="kw">LIKE</span> <span class="st">&#39;[^JM]ason&#39;</span>         <span class="co">-- not jason or mason</span></span>
-<span id="cb7-7"><a href="filtering.html#cb7-7" tabindex="-1"></a>  <span class="kw">AND</span> NAME <span class="kw">LIKE</span> <span class="st">&#39;[A-D]%&#39;</span>            <span class="co">-- all names that start with any letter between &#39;A&#39; and &#39;D&#39;</span></span></code></pre></div>
-</div>
-<div id="distinct-keyword" class="section level2 hasAnchor" number="4.2">
-<h2><span class="header-section-number">4.2</span> DISTINCT keyword<a href="filtering.html#distinct-keyword" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>When <code>DISTINCT</code> is applied to a single column, it filters out duplicate values in that specific column, returning only unique values for that column.</p>
-<ul>
-<li><p><code>Single Column:</code> Returns unique values for that column.</p></li>
-<li><p><code>Multiple Columns:</code> Returns unique combinations of the specified columns.</p></li>
-</ul>
-</div>
-<div id="advanced-filtering" class="section level2 hasAnchor" number="4.3">
-<h2><span class="header-section-number">4.3</span> Advanced Filtering<a href="filtering.html#advanced-filtering" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="having-clause" class="section level3 hasAnchor" number="4.3.1">
-<h3><span class="header-section-number">4.3.1</span> <code>HAVING</code> Clause<a href="filtering.html#having-clause" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<ul>
-<li><p>The <code>HAVING</code> clause is used to filter records that work on aggregated data, as opposed to the WHERE clause which filters rows before any aggregation is applied.</p></li>
-<li><p>Use HAVING when you need to filter groups after applying GROUP BY and aggregate functions (like SUM, COUNT, AVG, etc.).</p></li>
-</ul>
-<p>Example: This query returns departments with more than 10 employees.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb8-1"><a href="filtering.html#cb8-1" tabindex="-1"></a><span class="kw">SELECT</span> department, <span class="fu">COUNT</span>(employee_id) <span class="kw">AS</span> num_employees</span>
-<span id="cb8-2"><a href="filtering.html#cb8-2" tabindex="-1"></a><span class="kw">FROM</span> employees</span>
-<span id="cb8-3"><a href="filtering.html#cb8-3" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> department</span>
-<span id="cb8-4"><a href="filtering.html#cb8-4" tabindex="-1"></a><span class="kw">HAVING</span> <span class="fu">COUNT</span>(employee_id) <span class="op">&gt;</span> <span class="dv">10</span></span></code></pre></div>
-</div>
-<div id="qualify-clause" class="section level3 hasAnchor" number="4.3.2">
-<h3><span class="header-section-number">4.3.2</span> <code>QUALIFY</code> Clause<a href="filtering.html#qualify-clause" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<ul>
-<li><p>The <code>QUALIFY</code> clause filters the result set after window functions have been applied. It’s particularly useful when you want to filter results based on the output of window functions like <code>ROW_NUMBER</code>, <code>RANK</code>, or <code>DENSE_RANK.</code></p></li>
-<li><p>Use <code>QUALIFY</code> when you need to apply filtering conditions after using window functions, making it easier to handle complex queries involving ranking or ordering within groups.</p></li>
-</ul>
-<div class="sourceCode" id="cb9"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb9-1"><a href="filtering.html#cb9-1" tabindex="-1"></a><span class="kw">SELECT</span> </span>
-<span id="cb9-2"><a href="filtering.html#cb9-2" tabindex="-1"></a>    employee_id, department, </span>
-<span id="cb9-3"><a href="filtering.html#cb9-3" tabindex="-1"></a>    <span class="fu">RANK</span>() <span class="kw">OVER</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> department <span class="kw">ORDER</span> <span class="kw">BY</span> salary <span class="kw">DESC</span>) <span class="kw">AS</span> salary_rank</span>
-<span id="cb9-4"><a href="filtering.html#cb9-4" tabindex="-1"></a><span class="kw">FROM</span> employees</span>
-<span id="cb9-5"><a href="filtering.html#cb9-5" tabindex="-1"></a>QUALIFY salary_rank <span class="op">=</span> <span class="dv">1</span>;</span></code></pre></div>
+<div id="coding-can-you-provide-the-solutions-to-a-using-python-or-r" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">Chapter 7</span> [Coding] Can you provide the solutions to (A) using Python or R?<a href="coding-can-you-provide-the-solutions-to-a-using-python-or-r.html#coding-can-you-provide-the-solutions-to-a-using-python-or-r" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 
-</div>
-</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="creatind-tables.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="most-used-functions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="adhoc-solutions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="sample-solutions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

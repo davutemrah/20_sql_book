@@ -197,6 +197,32 @@ FROM employees;
 
 \
 
+## median
+
+```sql
+WITH OrderedData AS (
+    SELECT
+        salary,
+        ROW_NUMBER() OVER (ORDER BY salary) AS row_num,
+        COUNT(*) OVER () AS total_count
+    FROM employees
+)
+SELECT
+    AVG(salary) AS median_salary
+FROM OrderedData
+WHERE row_num IN ((total_count + 1) / 2, (total_count + 2) / 2);
+
+```
+
+In snowflake
+
+```sql
+SELECT
+  MEDIAN(salary)
+FROM TABLE_1
+```
+
+
 ## Functions comparing columns:
 
 These functions all operate on a per-row basis, evaluating or combining values from multiple columns within the same row.
@@ -219,39 +245,6 @@ FROM employees;
 
 
 
-## date functions
-
-`ADDDATE("2017-06-15", INTERVAL 10 DAY):` add date adding 10 days to given date
-
-`CURRENT_DATE() :`  return current date
-
-
-`DATE("2017-06-15") :` extract date part
-
-
-`DATEDIFF(END_DATE, START_DATE) :` returns difference in days
-
-
-`DATE_ADD("2017-06-15", INTERVAL 10 DAY) :` add date adding 10 days to given date
-
-
-`DAY("2017-06-15") :` Return the day of the month for a date:
-
-
-`DAYNAME("2017-06-15") :` Return the weekday name for a date:
-
-
-`HOUR("2017-06-20 09:34:00") :` Return the hour part of a datetime:
-
-`MONTH("2017-06-15") :` Return the month part of a date:
-
-`SUBDATE("2017-06-15", INTERVAL 10 DAY) :` Subtract 10 days from a date and return the date
-
-
-`WEEK("2017-10-25") :` Return the week number for a date:
-
-
-`YEAR("2017-06-15") :` Return the year part of a date:
 
 
 
@@ -291,6 +284,70 @@ SELECT F.MY_ID::VARCHAR AS MY_ID
 FROM TABLE_1 A,  LATERAL FLATTEN(A.ID_ARRAY) AS F
 ```
 
+
+### UPDATE
+
+
+ you want to update the salary of an employee with an EmployeeID of 5 to $75,000.
+ 
+ You would write:
+
+```sql
+UPDATE MY_TABLE
+
+SET Salary = 75000, JobTitle = 'Senior Analyst'
+
+WHERE EmployeeID = 5;
+```
+
+
+### ALTER
+
+DROP COLUMN "MiddleName" FROM Employees TABLE
+
+```sql
+ALTER TABLE Employees
+DROP COLUMN MiddleName;
+```
+
+### DELETE ROWS
+
+
+This will delete all rows but keep data structure
+
+```sql
+TRUNCATE TABLE table_name;
+```
+
+
+This will delete all rows but keep data structure. And also log row deletion.
+
+```sql
+DELETE FROM table_name;
+```
+
+
+### INSERT
+
+
+You can now insert new data into the table:
+
+
+```sql
+INSERT INTO table_name (column1, column2, ...)
+
+SELECT column1, column2, ...
+FROM source_table
+WHERE condition;
+```
+
+
+```sql
+INSERT INTO table_name 
+
+SELECT *
+FROM source_table
+```
 
 
 

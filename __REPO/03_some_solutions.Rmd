@@ -1,0 +1,154 @@
+# Sample Solutions
+
+## Datalemur 20 Solved SQL
+
+### Repeated transactions
+
+Sometimes, payment transactions are repeated by accident; it could be due to user error, API failure or a retry error that causes a credit card to be charged twice.
+
+Using the transactions table, identify any payments made at the same merchant with the same credit card for the same amount within 10 minutes of each other. Count such repeated payments.
+
+Assumptions:
+
+The first transaction of such payments should not be counted as a repeated payment. This means, if there are two transactions performed by a merchant with the same credit card and for the same amount within 10 minutes, there will only be 1 repeated payment.
+
+
+**Solution for PostgreSQL 14**
+
+```sql
+SELECT 
+COUNT(DISTINCT A.transaction_id) AS PAYMENT_COUNT
+FROM transactions A
+INNER JOIN transactions B 
+  ON A.merchant_id=B.merchant_id
+  AND A.credit_card_id=B.credit_card_id
+  AND A.AMOUNT=B.AMOUNT
+WHERE EXTRACT(EPOCH FROM (A.transaction_timestamp - B.transaction_timestamp))/60 > 0 
+  AND EXTRACT(EPOCH FROM (A.transaction_timestamp - B.transaction_timestamp))/60 <= 10
+```
+
+
+**Alternative solution in SNOWFLAKE**
+
+
+```sql
+SELECT 
+    COUNT(DISTINCT A.transaction_id) AS PAYMENT_COUNT
+FROM transactions A
+INNER JOIN transactions B 
+    ON A.merchant_id = B.merchant_id
+    AND A.credit_card_id = B.credit_card_id
+    AND A.AMOUNT = B.AMOUNT
+    AND A.transaction_id != B.transaction_id
+WHERE 
+    DATEDIFF(minute, B.transaction_timestamp, A.transaction_timestamp) > 0 
+    AND DATEDIFF(minute, B.transaction_timestamp, A.transaction_timestamp) <= 10;
+```
+
+**Using LAG() window function**
+
+
+```sql
+WITH payments AS (
+  SELECT 
+    merchant_id, 
+    EXTRACT(EPOCH FROM transaction_timestamp - 
+      LAG(transaction_timestamp) OVER(
+        PARTITION BY merchant_id, credit_card_id, amount 
+        ORDER BY transaction_timestamp)
+    )/60 AS minute_difference 
+  FROM transactions
+) 
+
+SELECT COUNT(merchant_id) AS payment_count
+FROM payments 
+WHERE minute_difference <= 10;
+```
+
+
+
+### Describe how recursive queries work in SQL. 
+
+Provide an example scenario where a recursive query would be beneficial.
+
+Recursive queries in SQL enable iteration over hierarchical data structures like organizational charts, bill-of-materials, or nested comments. For example, you could use a recursive query to traverse a hierarchical data structure and retrieve all descendants of a specific node.
+
+
+
+Scenario: Organizational Hierarchy Reporting
+
+Imagine you have an employee table in a database that stores information about employees and their reporting structure in a large company. The table includes an EmployeeID, EmployeeName, and ManagerID, where ManagerID is a reference to another EmployeeID, indicating who the manager is for that employee.
+
+Objective:
+You need to generate a report that lists all employees under a specific manager, including all levels of the hierarchy (i.e., the manager's direct reports, the direct reports of those direct reports, and so on).
+
+
+```sql
+CREATE TABLE Employees (
+    EmployeeID INT PRIMARY KEY,
+    EmployeeName VARCHAR(100),
+    ManagerID INT -- This references EmployeeID in the same table
+);
+```
+
+Sample Data
+
+```sql
+INSERT INTO Employees (EmployeeID, EmployeeName, ManagerID)
+VALUES 
+(1, 'Alice', NULL),      -- Alice is the CEO, no manager
+(2, 'Bob', 1),           -- Bob reports to Alice
+(3, 'Charlie', 2),       -- Charlie reports to Bob
+(4, 'David', 2),         -- David reports to Bob
+(5, 'Eve', 3),           -- Eve reports to Charlie
+(6, 'Frank', 3);         -- Frank reports to Charlie
+```
+
+
+#### Recursive Query Example:
+
+To retrieve the entire hierarchy under Bob (EmployeeID = 2):
+
+```sql
+WITH RECURSIVE EmployeeHierarchy AS (
+    -- Anchor member: Start with the manager (Bob)
+    SELECT 
+        EmployeeID, 
+        EmployeeName, 
+        ManagerID
+    FROM Employees
+    WHERE EmployeeID = 2
+
+    UNION ALL
+
+    -- Recursive member: Retrieve all employees who report to the current level of employees
+    SELECT 
+        e.EmployeeID, 
+        e.EmployeeName, 
+        e.ManagerID
+    FROM Employees e
+    INNER JOIN EmployeeHierarchy eh ON e.ManagerID = eh.EmployeeID
+)
+
+SELECT 
+    EmployeeID, 
+    EmployeeName, 
+    ManagerID
+FROM EmployeeHierarchy;
+```
+
+**Why Use a Recursive Query Here?**
+
+The recursive query effectively traverses the hierarchy and retrieves all descendants of a specific manager. This approach is scalable and adaptable to varying levels of hierarchy depth, which would be challenging to achieve with a non-recursive query.
+
+
+### Median Google Search Frequency
+
+Google's marketing team is making a Superbowl commercial and needs a simple statistic to put on their TV ad: the median number of searches a person made last year.
+
+However, at Google scale, querying the 2 trillion searches is too costly. Luckily, you have access to the summary table which tells you the number of searches made last year and how many Google users fall into that bucket.
+
+Write a query to report the median of searches made by a user. Round the median to one decimal point.
+
+
+

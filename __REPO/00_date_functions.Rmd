@@ -1,0 +1,38 @@
+## Date Functions
+
+
+`ADDDATE("2017-06-15", INTERVAL 10 DAY):` add date adding 10 days to given date
+
+`CURRENT_DATE() :`  return current date
+
+
+`DATE("2017-06-15") :` extract date part
+
+
+`DATEDIFF(END_DATE, START_DATE) :` returns difference in days
+
+
+`DATE_ADD("2017-06-15", INTERVAL 10 DAY) :` add date adding 10 days to given date
+
+
+`DAY("2017-06-15") :` Return the day of the month for a date:
+
+
+`DAYNAME("2017-06-15") :` Return the weekday name for a date:
+
+
+`HOUR("2017-06-20 09:34:00") :` Return the hour part of a datetime:
+
+`MONTH("2017-06-15") :` Return the month part of a date:
+
+`SUBDATE("2017-06-15", INTERVAL 10 DAY) :` Subtract 10 days from a date and return the date
+
+
+`WEEK("2017-10-25") :` Return the week number for a date:
+
+
+`YEAR("2017-06-15") :` Return the year part of a date:
+
+
+
+
